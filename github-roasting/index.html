@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Roasting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>GitHub Roasting</h1>
+
+    <div class="form-container">
+        <label for="username">Masukkan Username GitHub:</label>
+        <input type="text" id="username" placeholder="Contoh: octocat" />
+        <button id="submitBtn">Roasting!</button>
+    </div>
+
+    <div class="result" id="result">
+        <h2>Hasil Roasting:</h2>
+        <p id="roastingText"></p>
+    </div>
+
+    <script>
+        // Mendapatkan elemen-elemen DOM
+        const usernameInput = document.getElementById('username');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultContainer = document.getElementById('result');
+        const roastingText = document.getElementById('roastingText');
+
+        // Ketika tombol submit ditekan
+        submitBtn.addEventListener('click', async () => {
+            const username = usernameInput.value.trim();
+
+            if (!username) {
+                alert('Tolong masukkan username GitHub!');
+                return;
+            }
+
+            // Menyembunyikan hasil sebelumnya
+            resultContainer.style.display = 'none';
+
+            // Mengirimkan permintaan ke server Node.js
+            try {
+                const response = await fetch(`http://name-helped.gl.at.ply.gg:64716/api/gh-roasting?username=${username}`);
+
+                // Mengecek status respons
+                if (!response.ok) {
+                    throw new Error('Terjadi kesalahan saat mengambil data!');
+                }
+
+                const data = await response.json();
+
+                // Menampilkan hasil roasting
+                roastingText.textContent = data.roastingResult;
+                resultContainer.style.display = 'block';
+            } catch (error) {
+                alert('Terjadi kesalahan: ' + error.message);
+            }
+        });
+    </script>
+
+</body>
+</html>
